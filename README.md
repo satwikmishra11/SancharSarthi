@@ -1,2 +1,2 @@
 # SancharSarthi
-An learning mobile app for deaf and mute children 
+A learning mobile app for deaf and mute children 
