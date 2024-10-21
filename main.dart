@@ -131,3 +131,62 @@ class _WritingPadState extends State<WritingPad> {
     );
   }
 }
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
+class SignLanguageScreen extends StatefulWidget {
+  final String gujaratiText;
+
+  SignLanguageScreen({required this.gujaratiText});
+
+  @override
+  _SignLanguageScreenState createState() => _SignLanguageScreenState();
+}
+
+class _SignLanguageScreenState extends State<SignLanguageScreen> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // Example: Load a pre-recorded sign language video based on the input text
+    _controller = VideoPlayerController.asset('assets/sign_language/word1.mp4')
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Sign Language")),
+      body: Center(
+        child: _controller.value.isInitialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+            : CircularProgressIndicator(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _controller.value.isPlaying
+                ? _controller.pause()
+                : _controller.play();
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+        ),
+      ),
+    );
+  }
+}
+
