@@ -236,4 +236,42 @@ class _SpeechToSignLanguageState extends State<SpeechToSignLanguage> {
     );
   }
 }
+import 'package:flutter/material.dart';
+
+class ReportCardScreen extends StatelessWidget {
+  final String studentName;
+  final int mathScore;
+  final int scienceScore;
+
+  ReportCardScreen({
+    required this.studentName,
+    required this.mathScore,
+    required this.scienceScore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Student Report Card"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(
+              'Report Card for $studentName',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text('Mathematics: $mathScore / 100'),
+            SizedBox(height: 10),
+            Text('Science: $scienceScore / 100'),
+            // Additional analytics and performance charts can be added here
+          ],
+        ),
+      ),
+    );
+  }
+}
 
