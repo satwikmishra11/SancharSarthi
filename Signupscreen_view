@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'auth_service.dart';  // Import AuthService
+
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  String email = '';
+  String password = '';
+  String role = 'Student';  // Default role
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Sign Up")),
+      body: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(labelText: 'Email'),
+            onChanged: (value) => email = value,
+          ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Password'),
+            obscureText: true,
+            onChanged: (value) => password = value,
+          ),
+          DropdownButton<String>(
+            value: role,
+            items: ['Teacher', 'Student', 'Parent', 'HR'].map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newRole) {
+              setState(() {
+                role = newRole!;
+              });
+            },
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              AuthService authService = AuthService();
+              await authService.signUpWithEmailPassword(email, password, role);
+            },
+            child: Text("Sign Up"),
+          ),
+        ],
+      ),
+    );
+  }
+}
